@@ -1,15 +1,53 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script type="module" src="/app.js"></script>
-    <script rel="stylesheet" ></script>
-    <title>Guestbook</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script type="module" src="./app.js" defer></script>
+
+    <title>Hotel Ratings</title>
   </head>
   <body>
-    
-    
+    <h1> Hotel Ratings</h1>
+    <!-- we need a form to collect user data -->
+    <!-- ! remember the name attribute! -->
+    <!-- we need a container to display the user feedback -->
+    <!-- Form to collect user feedback -->
+      <form id="hotel-rating-form">
+        <label for="username">Name:</label>
+        <input type="text" id="username" name="username" 
+        placeholder="Enter your name" required />
+      
+        <label for="email">Email:</label>
+        <input type="email" id="email-input" name="email" 
+        placeholder="Enter your email" />
+      
+        <label for="hotel-location">Location of Hotel:</label>
+      <input type="text" id="hotel-location" name="location" 
+      placeholder="Enter hotel location" required />
+
+      <label for="hotel-name">Name of Hotel:</label>
+      <input type="text" id="hotel-name" name="hotel" 
+      placeholder="Enter hotel name" required />
+      
+        <label for="rating">Rating (1 to 5):</label>
+        <input type="number" id="rating" name="rating" min="1" max="5" required />
+
+        <label for="user-comment">Comments (optional)</label>
+      <textarea id="user-comment" name="comment" 
+      placeholder="Leave a comment" 
+      minlength="10" maxlength="50"></textarea> 
+
+      
+        <button type="submit">Submit Feedback</button>
+      </form>
+
+    <!-- Container to display feedback messages -->
+    <div id="feedback-container">
+      <h2>Feedback Messages:</h2>
+      <div id="feedback-messages"></div>
+    </div>
   </body>
 </html>
