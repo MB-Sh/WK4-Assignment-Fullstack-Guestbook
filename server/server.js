@@ -35,44 +35,47 @@ app.get("/", function (request, response) {
     //task we want this endpoint to store
     response.json({ message: "Hotel Ratings API is working." });
   });
-
+  
   app.get("/hotel_rating", async (request, response)=> {
     //task we want this endpoint to store
     const query = await db.query (`SELECT * FROM hotel_rating `);
     response.json(query.rows);
     console.log(query);
   });
+  
+  app.post("/hotel_rating", function (request, response) {
+    const bodyData = request.body;
+    console.log("Received Data:", bodyData);
+    if (!bodyData.username || !bodyData.location 
+        || !bodyData.hotel || !bodyData.rating
+        || !bodyData.comment) {
+        // If any of these fields are missing, send a response with a 400 status code (Bad Request)
+        return response.status(400).json({ error: "Please provide all required fields" });
+    }
+    
+    const query = ` INSERT INTO hotel_rating (username, email, location, hotel, rating, comment)
+    VALUES ($1, $2, $3, $4, $5, $6)
+    RETURNING *;`;
+    
+    const values = [bodyData.username, 
+    bodyData.email, bodyData.location, 
+    bodyData.hotel, bodyData.rating, bodyData.comment];
+    
+    db.query(query, values, function (error, result) {
+    // 6. If there's an error executing the query, send a 500 status code (Internal Server Error)
+    if (error) {
+        return response.status(500).json({ error: "Failed to add hotel rating" });
+    }
+    // 7. If the data was successfully inserted, we send back a success message and the newly added data
+    response.status(201).json({
+        message: "Hotel rating added successfully!",
+        newRating: result.rows[0], // This is the newly inserted row
+        });
+    });
+    
+    // The response will contain the newly added hotel rating and a message saying that the operation was successful.
+    });
 
 
 
 
-
-
-// //I need to write an endpoint to ADD new data
-// app.post("/hotel_rating", async (request, response)=> {
-//     //we will use our request parameter to access the data in the body
-//     //the body stores the data that comes from the user
-//     const bodyData = request.body;
-
-//     console.log(bodyData);
-
-//      //we will use our response parameter to see what data was added
-//   response.json({
-//     message: "Body data received",
-//     item: `${bodyData.location}`,
-//   });
-// });
-
-
-
-//You need two routes minimum
-
-//You need a route to READ the database data
-
-//You need a route to CREATE or ADD new data to the database
-//! In your CREATE route, the request.body is an object that represents the form data coming from your client
-
-//You need to use SQL queries and parameters in these routes
-
-//======================
-//For this assignment, the minimum you need is one table to store your user feedback
