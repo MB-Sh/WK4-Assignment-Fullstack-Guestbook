@@ -51,7 +51,7 @@ hotelRatingForm.addEventListener("submit", handleSubmit);
 // Fetch the READ endpoint to have access to the feedback data
 async function fetchFeedbackMessages() {
     //! Replace 'localhost-url' with your deployed client URL when done
-    const response = await fetch("https://wk4-assignment-fullstack-guestbook.onrender.com");
+    const response = await fetch("https://wk4-assignment-fullstack-guestbook-1.onrender.com");
     const databaseData = await response.json(); // Parse response into JSON
     displayFormValues(databaseData); // Call function to display the data
   } 
